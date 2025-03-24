@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartik's Analog Clock</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1c2833, #2c3e50); /* Darker, more subtle gradient */
+            color: #d1d1d1; /* Light gray text */
+            font-family: 'Montserrat', sans-serif; /* Modern font */
+        }
+        .analog-clock {
+            width: 300px; /* Larger clock */
+            height: 300px;
+            border: 10px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+            border-radius: 50%;
+            position: relative;
+            margin-top: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6); /* Deeper shadow */
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)); /* More pronounced radial gradient */
+            overflow: hidden; /* Clip any overflow */
+        }
+        .hand {
+            position: absolute;
+            background-color: #f0f0f0; /* Light hand color */
+            transform-origin: 50% 100%;
+            border-radius: 6px; /* More rounded hands */
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Subtle hand shadow */
+        }
+        .hour-hand {
+            width: 10px;
+            height: 80px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            background: linear-gradient(to bottom, #a0a0a0, #d0d0d0); /* Gradient hour hand */
+        }
+        .minute-hand {
+            width: 8px;
+            height: 120px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            background: linear-gradient(to bottom, #b0b0b0, #e0e0e0); /* Gradient minute hand */
+        }
+        .second-hand {
+            width: 4px;
+            height: 140px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            background: linear-gradient(to bottom, #e74c3c, #f08080); /* Gradient red second hand */
+        }
+        .number {
+            position: absolute;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            color: #e0e0e0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+        .analog-clock::before { /* Center dot */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            z-index: 3;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Kartik's Analog Clock</h1>
+
+    <div class="analog-clock">
+        <div class="hand hour-hand" id="hourHand"></div>
+        <div class="hand minute-hand" id="minuteHand"></div>
+        <div class="hand second-hand" id="secondHand"></div>
+    </div>
+
+    <script>
+        const clock = document.querySelector(".analog-clock");
+        const clockRadius = 140;
+        const centerX = 150;
+        const centerY = 150;
+
+        for (let i = 1; i <= 12; i++) {
+            let angle = (i * 30 - 90) * (Math.PI / 180);
+            let x = centerX + clockRadius * Math.cos(angle) - 20;
+            let y = centerY + clockRadius * Math.sin(angle) - 20;
+            let number = document.createElement("div");
+            number.className = "number";
+            number.style.left = `${x}px`;
+            number.style.top = `${y}px`;
+            number.textContent = i;
+            clock.appendChild(number);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+            const minuteDeg = minutes * 6;
+            const secondDeg = seconds * 6;
+
+            document.getElementById("hourHand").style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
+            document.getElementById("minuteHand").style.transform = `translate(-50%, -100%) rotate(${minuteDeg}deg)`;
+            document.getElementById("secondHand").style.transform = `translate(-50%, -100%) rotate(${secondDeg}deg)`;
+        }
+
+        function runClock() {
+            updateClock();
+            requestAnimationFrame(runClock);
+        }
+
+        runClock();
+    </script>
+</body>
+</html>

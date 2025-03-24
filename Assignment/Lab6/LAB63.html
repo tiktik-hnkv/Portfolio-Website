@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashlight Text</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a; /* Darker background */
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif; /* Modern font */
+            cursor: none;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+        .text-container {
+            position: relative;
+            font-size: 4rem; /* Larger text */
+            font-weight: 700;
+            color: #e0e0e0; /* Slightly lighter text */
+            background: none;
+            background-clip: text;
+            -webkit-background-clip: text;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out; /* Smoother transition */
+            z-index: 1;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+        }
+
+        .flashlight {
+            position: absolute;
+            width: 400px; /* Larger flashlight */
+            height: 400px;
+            background: radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.9) 0%, /* Brighter center */
+                rgba(255, 255, 255, 0.1) 80%, /* Softer edge */
+                rgba(255, 255, 255, 0) 95%
+            );
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+            z-index: 0;
+            filter: blur(5px); /* Add a slight blur */
+        }
+    </style>
+</head>
+<body>
+    <div class="text-container" id="text">
+        Flashlight Text
+    </div>
+    <div class="flashlight" id="flashlight"></div>
+    <script>
+        const flashlight = document.getElementById('flashlight');
+        const text = document.getElementById('text');
+
+        document.addEventListener('mousemove', (e) => {
+            flashlight.style.left = `${e.clientX}px`;
+            flashlight.style.top = `${e.clientY}px`;
+            text.style.opacity = 1;
+        });
+
+        document.addEventListener('mouseleave', () => {
+            text.style.opacity = 0;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            flashlight.style.left = `${e.touches[0].clientX}px`;
+            flashlight.style.top = `${e.touches[0].clientY}px`;
+            text.style.opacity = 1;
+        }, { passive: false });
+
+        document.addEventListener('touchend', () => {
+            text.style.opacity = 0;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Animation</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .square {
+            background-color: #618290;
+            height: 90px;
+            width: 90px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e0e0e0;
+            font-size: 20px;
+            animation: simpleAnim 6s linear infinite alternate;
+        }
+
+        @keyframes simpleAnim {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: translateX(300px) rotate(0deg);
+            }
+            100% {
+                transform: translateX(0) rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="square">CSS</div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile Flashlight</title>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    background-color: #1a1a1a; /* Darker background */
+    color: #f0f0f0; /* Lighter text */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #64b5f6; /* Blue accent color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    margin: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth transitions */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+}
+
+button:hover {
+    transform: translateY(-3px); /* Slight lift on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+#turnOn {
+    background-color: #4caf50;
+    color: white;
+}
+
+#turnOff {
+    background-color: #f44336;
+    color: white;
+}
+
+#turnOn:disabled, #turnOff:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+</style>
+</head>
+<body>
+    <h1>Mobile Flashlight Control</h1>
+    <button id="turnOn">Turn On Flashlight</button>
+    <button id="turnOff" disabled>Turn Off Flashlight</button>
+
+    <script>
+        let stream;
+        let track;
+        const turnOnBtn = document.getElementById('turnOn');
+        const turnOffBtn = document.getElementById('turnOff');
+
+        turnOnBtn.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: { ideal: 'environment' } }
+                });
+                track = stream.getVideoTracks()[0];
+                const capabilities = track.getCapabilities();
+                if ('torch' in capabilities) {
+                    await track.applyConstraints({
+                        advanced: [{ torch: true }]
+                    });
+                    turnOnBtn.disabled = true;
+                    turnOffBtn.disabled = false;
+                } else {
+                    alert('Torch not supported on this device.');
+                    stream.getTracks().forEach(track => track.stop());
+                }
+            } catch (error) {
+                console.error("Error accessing camera or turning on torch:", error);
+                alert("Could not access camera or enable torch. Please check permissions and compatibility.");
+            }
+        });
+
+        turnOffBtn.addEventListener('click', async () => {
+            try {
+                if (track) {
+                    await track.applyConstraints({
+                        advanced: [{ torch: false }]
+                    });
+                }
+            } catch (error) {
+                console.error("Error turning off torch:", error);
+            }
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            turnOnBtn.disabled = false;
+            turnOffBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

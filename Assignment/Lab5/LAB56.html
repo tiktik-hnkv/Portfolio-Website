@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Emoji Generator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #29323c, #485563); /* Dark Blue/Gray Gradient */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e0e0e0; /* Light gray text for contrast */
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #81d4fa; /* Light blue accent */
+        }
+
+        #emoji {
+            font-size: 80px;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 15px 30px;
+            background-color: #03a9f4; /* Bright blue button */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #0288d1; /* Darker blue on hover */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Emoji Generator</h1>
+    <div id="emoji">😊</div>
+    <button onclick="generateEmoji()">Generate Emoji</button>
+
+    <script>
+        const emojis = ["😊", "😂", "🎉", "🐱", "🐶", "🍕", "🚀", "🌟", "🌈", "💖", "🎵", "📚", "☕", "💻", "📱", "📷", "🌍", "🌞", "🌙", "⭐", "⚡", "🔥"];
+
+        function generateEmoji() {
+            const randomIndex = Math.floor(Math.random() * emojis.length);
+            const emojiDiv = document.getElementById("emoji");
+            emojiDiv.style.animation = 'none';
+            emojiDiv.offsetHeight;
+            emojiDiv.style.animation = null;
+            emojiDiv.textContent = emojis[randomIndex];
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Circular Motion</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0e0e0, #f8f8f8); /* Subtle gradient */
+            font-family: 'Georgia', serif; /* Elegant font */
+        }
+
+        .container {
+            position: relative;
+            width: 240px; /* Slightly larger path */
+            height: 240px;
+        }
+
+        .moving-circle {
+            width: 60px; /* Slightly larger circle */
+            height: 60px;
+            background: linear-gradient(135deg, #4a6572, #618290); /* Sophisticated gradient */
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            animation: moveSquare 6s ease-in-out infinite, rotateCircle 3s linear infinite; /* Adjusted animations */
+        }
+
+        @keyframes moveSquare {
+            0% { top: 0; left: 0; }
+            25% { top: 0; left: 180px; }
+            50% { top: 180px; left: 180px; }
+            75% { top: 180px; left: 0; }
+            100% { top: 0; left: 0; }
+        }
+
+        @keyframes rotateCircle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="moving-circle"></div>
+    </div>
+</body>
+</html>

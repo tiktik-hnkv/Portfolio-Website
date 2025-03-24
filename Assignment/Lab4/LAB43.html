@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Starburst Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #e0e0e0, #f8f8f8); /* Subtle gradient */
+            font-family: 'Georgia', serif; /* Elegant font */
+        }
+
+        .starburst {
+            width: 220px; /* Slightly larger */
+            height: 220px;
+            background: linear-gradient(135deg, #4a6572, #618290); /* Sophisticated gradient */
+            clip-path: polygon(
+                50% 0%, 55% 25%, 100% 25%, 65% 50%, 75% 100%,
+                50% 75%, 25% 100%, 35% 50%, 0% 25%, 45% 25%
+            );
+            animation: starburstEffect 3s ease-in-out infinite alternate, rotate 8s linear infinite; /* Adjusted animations */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            border-radius: 10px; /* Slight roundness */
+        }
+
+        @keyframes starburstEffect {
+            0%, 100% {
+                clip-path: polygon(
+                    50% 0%, 55% 25%, 100% 25%, 65% 50%, 75% 100%,
+                    50% 75%, 25% 100%, 35% 50%, 0% 25%, 45% 25%
+                );
+            }
+            50% {
+                clip-path: polygon(
+                    50% 10%, 60% 30%, 90% 30%, 70% 55%, 85% 90%,
+                    50% 65%, 15% 90%, 30% 55%, 10% 30%, 40% 25%
+                );
+            }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="starburst"></div>
+</body>
+</html>

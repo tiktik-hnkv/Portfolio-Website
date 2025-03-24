@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem 5 - Vertical Navigation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff; /* Soft gradient background */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Use min-height */
+        }
+
+        .vertical-menu {
+            width: 220px; /* Slightly wider */
+            border-radius: 12px; /* More rounded corners */
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Deeper shadow */
+            background-color: #37474f; /* Darker background */
+        }
+
+        .vertical-menu a {
+            display: block;
+            color: #eceff1; /* Lighter text */
+            text-decoration: none;
+            padding: 18px 25px; /* Increased padding */
+            border-bottom: 1px solid #455a64; /* Lighter border */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
+        }
+
+        .vertical-menu a:last-child {
+            border-bottom: none; /* Remove border from last item */
+        }
+
+        .vertical-menu a:first-child {
+            background-color: #00acc1; /* More vibrant color */
+            font-weight: 600; /* Slightly lighter bold */
+            color: white;
+        }
+
+        .vertical-menu a:hover {
+            background-color: #455a64; /* Lighter hover color */
+            transform: translateX(5px); /* Slight horizontal shift */
+        }
+    </style>
+</head>
+<body>
+    <div class="vertical-menu">
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">About</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Contact</a>
+    </div>
+</body>
+</html>

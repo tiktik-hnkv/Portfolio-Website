@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial- scale=1.0">
+<title>Web Programming</title>
+<style>
+body {
+margin: 0;
+font-family: Arial, sans-serif; line-height: 1.6;
+}
+
+header {
+background-color: #ff6347; color: white;
+text-align: center; padding: 20px 0; font-size: 24px;
+}
+
+nav {
+background-color: #1e90ff; color: white;
+padding: 10px 0;
+}
+
+nav ul {
+margin: 0;
+ 
+padding: 0;
+list-style: none; display: flex;
+justify-content: center;
+}
+
+nav ul li {
+margin: 0 15px;
+}
+
+nav ul li a { color: white;
+text-decoration: none; font-weight: bold;
+}
+
+.container { display: grid;
+grid-template-columns: 2fr 1fr; gap: 10px;
+padding: 20px;
+}
+
+.main {
+background-color: #32cd32; padding: 20px;
+color: white; border-radius: 5px;
+}
+
+.sidebar {
+ 
+background-color: #ffa500; padding: 20px;
+color: white; border-radius: 5px;
+}
+
+.article {
+background-color: #9370db; padding: 20px;
+color: white; margin-top: 10px; border-radius: 5px;
+}
+
+footer {
+background-color: #2f4f4f; color: white;
+text-align: center; padding: 10px 0; margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<header>
+Web Programming
+</header>
+
+<nav>
+<ul>
+ 
+<li><a href="#">Home</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+</nav>
+
+<div class="container">
+<div class="main">
+<h2>Main Section</h2>
+<p>This is the main content of the page.</p>
+</div>
+<div class="sidebar">
+<h2>Sidebar</h2>
+<p>This is the sidebar, containing related links or ads.</p>
+</div>
+<div class="article">
+<h2>Article</h2>
+<p>This is a standalone article related to the main content.</p>
+</div>
+</div>
+
+<footer>
+&copy; 2025 Your Company. All rights reserved.
+</footer>
+
+</body>
+</html>

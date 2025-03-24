@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minion Eyes</title>
+<style>
+body {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ margin: 0;
+ background-color: yellow;
+ overflow: hidden;
+}
+.eyes {
+ display: flex;
+ gap: 30px;
+}
+.eye {
+ width: 100px;
+ height: 100px;
+ background-color: white;
+ border: 5px solid black;
+ border-radius: 50%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ position: relative;
+}
+.pupil {
+ width: 30px;
+ height: 30px;
+ background-color: brown;
+ border-radius: 50%;
+ position: absolute;
+ transition: transform 0.1s linear;
+}
+</style>
+</head>
+<body>
+<div class="eyes">
+ <div class="eye"><div class="pupil" id="pupil1"></div></div>
+ <div class="eye"><div class="pupil" id="pupil2"></div></div>
+</div>
+<script>
+document.addEventListener('mousemove', (e) => {
+ const eyes = document.querySelectorAll('.eye');
+ eyes.forEach((eye, index) => {
+ const pupil = document.getElementById(`pupil${index + 1}`);
+ const rect = eye.getBoundingClientRect();
+ const eyeX = rect.left + rect.width / 2;
+ const eyeY = rect.top + rect.height / 2;
+ const deltaX = e.clientX - eyeX;
+ const deltaY = e.clientY - eyeY;
+ const angle = Math.atan2(deltaY, deltaX);
+ const distance = Math.min(20, Math.sqrt(deltaX ** 2 + deltaY ** 2));
+ pupil.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) *
+distance}px)`;
+ });
+});
+</script>
+</body>
+</html>

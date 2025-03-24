@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draw Shapes</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f0f2f5, #e1e8ed); /* Light gradient background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #4a90e2; /* Nice blue for heading */
+        }
+
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Allow canvas elements to wrap */
+        }
+
+        canvas {
+            margin: 20px; /* Increased margin for spacing */
+            border: 2px solid #ddd; /* Light border for canvas */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+        }
+
+        canvas:hover {
+            transform: scale(1.05); /* Slightly scale up on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>Draw Shapes</h1>
+    <div class="canvas-container">
+        <canvas id="circleCanvas" width="150" height="150"></canvas>
+        <canvas id="squareCanvas" width="150" height="150"></canvas>
+        <canvas id="triangleCanvas" width="150" height="150"></canvas>
+    </div>
+
+    <script>
+        function drawCircle() {
+            const canvas = document.getElementById("circleCanvas");
+            const ctx = canvas.getContext("2d");
+            ctx.beginPath();
+            ctx.arc(75, 75, 50, 0, Math.PI * 2);
+            ctx.fillStyle = "#e74c3c"; // Red, but nicer
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawSquare() {
+            const canvas = document.getElementById("squareCanvas");
+            const ctx = canvas.getContext("2d");
+            ctx.fillStyle = "#3498db"; // Blue, but nicer
+            ctx.fillRect(25, 25, 100, 100);
+        }
+
+        function drawTriangle() {
+            const canvas = document.getElementById("triangleCanvas");
+            const ctx = canvas.getContext("2d");
+            ctx.beginPath();
+            ctx.moveTo(75, 25);
+            ctx.lineTo(25, 125);
+            ctx.lineTo(125, 125);
+            ctx.closePath();
+            ctx.fillStyle = "#2ecc71"; // Green, but nicer
+            ctx.fill();
+        }
+
+        drawCircle();
+        drawSquare();
+        drawTriangle();
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Assignment</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Use min-height to ensure it fills the viewport */
+            margin: 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px; /* Reduced padding */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%; /* Responsive width */
+            max-width: 400px; /* Maximum width */
+            box-sizing: border-box; /* Include padding and border in width */
+        }
+
+        label {
+            display: block;
+            margin-top: 15px; /* Reduced margin */
+            font-weight: 600;
+            color: #333;
+            font-size: 14px; /* Reduced font size */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="color"],
+        input[type="range"] {
+            width: calc(100% - 12px);
+            padding: 8px; /* Reduced padding */
+            margin-top: 5px; /* Reduced margin */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px; /* Reduced font size */
+        }
+
+        input[type="color"] {
+            height: 30px; /* Reduced height */
+            padding: 3px; /* Reduced padding */
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px; /* Reduced padding */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px; /* Reduced font size */
+            margin-top: 20px; /* Reduced margin */
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob">
+
+        <label for="color">Favorite Color:</label>
+        <input type="color" id="color" name="color">
+
+        <label for="range">Range:</label>
+        <input type="range" id="range" name="range">
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

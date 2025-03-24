@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #e0f7fa;
+        }
+
+        input[type="number"] {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 8px;
+            width: 200px;
+            font-size: 1em;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background-color: #00bcd4;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0097a7;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        #attempts {
+            margin-top: 10px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the Number!</h1>
+        <input type="number" id="guessInput" placeholder="Enter your guess (1-100)">
+        <button onclick="checkGuess()">Guess</button>
+        <p id="message"></p>
+        <p id="attempts"></p>
+    </div>
+
+    <script>
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const guessInput = document.getElementById("guessInput");
+            const message = document.getElementById("message");
+            const attemptsDisplay = document.getElementById("attempts");
+            const guess = parseInt(guessInput.value);
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                message.textContent = "Please enter a valid number between 1 and 100.";
+                return;
+            }
+
+            attempts++;
+            attemptsDisplay.textContent = `Attempts: ${attempts}`;
+
+            if (guess === randomNumber) {
+                message.textContent = `Congratulations! You guessed the number ${randomNumber} in ${attempts} attempts!`;
+                guessInput.disabled = true;
+            } else if (guess < randomNumber) {
+                message.textContent = "Too low! Try again.";
+            } else {
+                message.textContent = "Too high! Try again.";
+            }
+
+            guessInput.value = "";
+            guessInput.focus();
+        }
+    </script>
+</body>
+</html>

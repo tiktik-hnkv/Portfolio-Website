@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Access</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #232526, #414345);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #e0e0e0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-y: auto; /* Allow vertical scroll */
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            max-width: 700px;
+            width: 95%;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 40px 0; /* Add margin for spacing when scrolling */
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 40px;
+            color: #a8dadc;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        video, canvas, #screenshot {
+            display: block;
+            margin: 40px auto;
+            border: 2px solid #a8dadc;
+            border-radius: 15px;
+            max-width: 100%;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        button {
+            padding: 14px 30px;
+            margin: 20px 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #45a049, #66bb6a);
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        button:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #screenshot {
+            display: none;
+        }
+
+        #downloadLink {
+            display: none;
+            margin-top: 25px;
+            color: #a8dadc;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        #downloadLink:hover {
+            text-decoration: underline;
+            color: #b8e9ed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Webcam Access</h1>
+        <video id="webcam" autoplay></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+        <img id="screenshot" alt="Screenshot">
+        <a id="downloadLink" download="recording.webm">Download Recording</a>
+        <div>
+            <button id="startBtn">Start Webcam</button>
+            <button id="stopBtn" disabled>Stop Webcam</button>
+            <button id="captureBtn" disabled>Capture Screenshot</button>
+            <button id="startRecordBtn" disabled>Start Recording</button>
+            <button id="stopRecordBtn" disabled>Stop Recording</button>
+        </div>
+    </div>
+    <script>
+        const video = document.getElementById("webcam");
+        const canvas = document.getElementById("canvas");
+        const screenshotImg = document.getElementById("screenshot");
+        const startBtn = document.getElementById("startBtn");
+        const stopBtn = document.getElementById("stopBtn");
+        const captureBtn = document.getElementById("captureBtn");
+        const startRecordBtn = document.getElementById("startRecordBtn");
+        const stopRecordBtn = document.getElementById("stopRecordBtn");
+        const downloadLink = document.getElementById("downloadLink");
+        let stream = null;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+
+        startBtn.addEventListener("click", async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                captureBtn.disabled = false;
+                startRecordBtn.disabled = false;
+            } catch (error) {
+                console.error("Error accessing webcam:", error);
+                alert("Could not access webcam. Please check browser settings.");
+            }
+        });
+
+        stopBtn.addEventListener("click", () => {
+            if (stream) {
+                let tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+                video.srcObject = null;
+            }
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            captureBtn.disabled = true;
+            startRecordBtn.disabled = true;
+            stopRecordBtn.disabled = true;
+        });
+
+        captureBtn.addEventListener("click", () => {
+            const context = canvas.getContext("2d");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            screenshotImg.src = canvas.toDataURL("image/png");
+            screenshotImg.style.display = "block";
+            const link = document.createElement("a");
+            link.href = screenshotImg.src;
+            link.download = "screenshot.png";
+            link.click();
+        });
+
+        startRecordBtn.addEventListener("click", () => {
+            recordedChunks = [];
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: "video/webm" });
+                const videoURL = URL.createObjectURL(blob);
+                downloadLink.href = videoURL;
+                downloadLink.style.display = "block";
+            };
+            mediaRecorder.start();
+            startRecordBtn.disabled = true;
+            stopRecordBtn.disabled = false;
+        });
+
+        stopRecordBtn.addEventListener("click", () => {
+            if (mediaRecorder && mediaRecorder.state !== "inactive") {
+                mediaRecorder.stop();
+            }
+        });
+    </script>
+</body>
+</html>

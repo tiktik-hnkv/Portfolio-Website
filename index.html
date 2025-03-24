@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kartik Iyer</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="home.css">
+    <style>        
+        #typing-container {
+            font-size: 2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        #cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.0em;
+            position: relative;
+            top: 3px;
+            background: white;
+            font-weight: bold;
+            animation: blink 0.75s step-end infinite;
+        }
+        @keyframes blink {
+            50% { background: transparent; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="./Assignment/Assignment.html">Assignments</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="home">
+        <div class="profile">
+            <img src="e7.jpg" alt="Kartik Iyer" class="profile-pic">
+
+            <div id="typing-container">
+                <span id="typing"></span>
+                <span id="cursor"></span>
+            </div>
+
+            <div class="social-icons">
+               <a href="">
+                <i class='bx bxl-github'></i>
+               </a>
+               <a href="">
+                <i class='bx bxl-linkedin-square' ></i>
+               </a>
+            </div>
+            <p class="intro">
+              I'm a sophomore Computer Engineering student at VIT Chennai with a passion for <span style="color:#ff00ff">MANAGEMENT</span> and <span style="color:#ff00ff">CONTENT WRITING</span> skills. I am always eager to learn and work on new challenges.
+            </p>
+        </div>
+    </section>
+    
+    <script>
+        const typingElement = document.getElementById('typing');
+        const name = "Hi, I'm Kartik Iyer";
+        let index = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            if (!isDeleting) {
+                typingElement.textContent = name.substring(0, index);
+                index++;
+                if (index > name.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 1000);  // Pause after typing
+                } else {
+                    setTimeout(typeEffect, 150);
+                }
+            } else {
+                typingElement.textContent = name.substring(0, index);
+                index--;
+                if (index === 0) {
+                    isDeleting = false;
+                }
+                setTimeout(typeEffect, 100);
+            }
+        }
+
+        typeEffect();
+    </script>
+</body>
+</html>
