@@ -1,0 +1,66 @@
+<!-- Project 1: MoodClock -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoodClock</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      text-align: center;
+      transition: background 1s;
+    }
+    .clock {
+      font-size: 4em;
+      margin-top: 20vh;
+    }
+    select {
+      font-size: 1em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock" id="clock">00:00:00</div>
+  <select id="mood">
+    <option value="default">Select Your Mood</option>
+    <option value="happy">😊 Happy</option>
+    <option value="sad">😢 Sad</option>
+    <option value="angry">😡 Angry</option>
+    <option value="calm">😌 Calm</option>
+  </select>
+  <script>
+    const clock = document.getElementById('clock');
+    const mood = document.getElementById('mood');
+
+    function updateClock() {
+      const now = new Date();
+      clock.textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+
+    mood.addEventListener('change', () => {
+      switch (mood.value) {
+        case 'happy':
+          document.body.style.background = 'linear-gradient(to right, #fceabb, #f8b500)';
+          break;
+        case 'sad':
+          document.body.style.background = 'linear-gradient(to right, #485563, #29323c)';
+          break;
+        case 'angry':
+          document.body.style.background = 'linear-gradient(to right, #e53935, #e35d5b)';
+          break;
+        case 'calm':
+          document.body.style.background = 'linear-gradient(to right, #43cea2, #185a9d)';
+          break;
+        default:
+          document.body.style.background = '#fff';
+      }
+    });
+  </script>
+</body>
+</html>
+
+
