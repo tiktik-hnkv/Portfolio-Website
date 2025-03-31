@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <title>Lab 6</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+        
+        body {
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            width: 100%;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            color: white;
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            height: 50px;
+        }
+        
+        .header h1 {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            z-index: 1;
+            border-radius: 8px;
+            margin-top: 10px;
+            left: -20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        .dropdown.show .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            border-left: 3px solid #4b6cb7;
+            color: #4b6cb7;
+            padding-left: 20px;
+        }
+        
+        .dropdown-content a i {
+            margin-right: 10px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .dropdown .nav-item {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .dropdown .nav-item::after {
+            content: "\f107";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown.show .nav-item::after {
+            transform: rotate(180deg);
+        }
+
+        .content {
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        .content h1 {
+            font-size: 2.2em;
+            margin: 15px 0;
+            color: #182848;
+            position: relative;
+            display: inline-block;
+            align-self: center;
+        }
+
+        .content h1:after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            bottom: -5px;
+            left: 20%;
+            border-radius: 10px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow wrapping */
+            margin-top: 15px;
+            gap: 30px;
+        }
+
+        .image-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: calc(33.333% - 30px); /* Adjust width to fit 3 items per row */
+            max-width: 250px;
+        }
+        /* Add this part */
+        .image-item:nth-child(3n+4) {
+          width:100%;
+          justify-content:center;
+          display:flex;
+        }
+
+        .image-wrapper {
+            width: 250px;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .image-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+
+        .image-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .image-link {
+            padding: 10px 16px;
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            width: 150px;
+            box-shadow: 0 3px 5px rgba(75, 108, 183, 0.2);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .image-link:hover {
+            transform: scale(1.03);box-shadow: 0 4px 8px rgba(75, 108, 183, 0.3);
+        }
+
+        @media (max-width: 900px) {
+            .image-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                overflow-y: auto;
+                gap: 25px;
+            }
+            .image-wrapper {
+                width: 220px;
+                height:170px;
+            }
+            .image-item {
+              width: calc(50% - 25px);
+              max-width: none;
+            }
+            .image-item:nth-child(3n+4) {
+              width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Lab 6</h1>
+        <div class="nav-links">
+            <a href="https://tiktik-hnkv.github.io/Portfolio-Website/" class="nav-item">
+                <i class="fa fa-home"></i>&nbsp; HOME
+            </a>
+            <div class="dropdown" id="assignmentsDropdown">
+                <div class="nav-item" onclick="toggleDropdown()">
+                    <i class="fas fa-file-code"></i>&nbsp; ASSIGNMENTS
+                </div>
+                <div class="dropdown-content">
+                    <a href="../Lab1/Lab1.html">
+                        <i class="fa fa-folder"></i>&nbsp; LAB-1
+                    </a>
+                    <a href="../Lab2/Lab2.html">
+                        <i class="fa fa-folder"></i>&nbsp; LAB-2
+                    </a>
+                    <a href="../Lab3/Lab3.html">
+                        <i class="fa fa-folder"></i>&nbsp; LAB-3
+                    </a>
+                    <a href="../Lab4/Lab4.html">
+                        <i class="fa fa-folder"></i>&nbsp; LAB-4
+                    </a>
+                    <a href="../Lab5/Lab5.html">
+                        <i class="fa fa-folder"></i>&nbsp; LAB-5
+                    </a>
+                    <a href="../Lab6/Lab6.html">
+                        <i class="fa fa-folder"></i>&nbsp; LAB-6
+                    </a>
+                    <a href="./Assignment/Projects/pro.html">
+                            <i class="fa-brands fa-font-awesome"></i>&nbsp; PROJECTS
+                        </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="image-container">
+            <div class="image-item">
+                <div class="image-wrapper">
+                    <img src="pro1.png" alt="Pro 1 Image">
+                </div>
+                <a href="project1.html" class="image-link">Project 1</a>
+            </div>
+            <div class="image-item">
+                <div class="image-wrapper">
+                    <img src="pro2.png" alt="Pro 2 Image">
+                </div>
+                <a href="project2.html" class="image-link">Project 2</a>
+            </div>
+            <div class="image-item">
+                <div class="image-wrapper">
+                    <img src="pro3.png" alt="Pro 3 Image">
+                </div>
+                <a href="project3.html" class="image-link">Project 3</a>
+            </div>
+            <div class="image-item">
+                <div class="image-wrapper">
+                    <img src="pro4.png" alt="Pro 4 Image">
+                </div>
+                <a href="project4.html" class="image-link">Project 4</a>
+            </div>
+            <div class="image-item">
+                <div class="image-wrapper">
+                    <img src="pro5.png" alt="Pro 5 Image">
+                </div>
+                <a href="project5.html" class="image-link">Project 5</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleDropdown() {
+            document.getElementById("assignmentsDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.nav-item')) {
+                var dropdowns = document.getElementsByClassName("dropdown");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
